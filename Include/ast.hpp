@@ -4,65 +4,57 @@
 #include <vector>
 #include "tokens.hpp"
 
-struct Node
-{
+struct Node {
     virtual ~Node() = default;
 };
 
-struct NumberNode : Node
-{
+struct NumberNode : Node {
     Token tok;
     explicit NumberNode(Token t) : tok(std::move(t)) {}
     std::string getValue() const { return tok.value; }
 };
 
-struct IdentifierNode : Node
-{
+struct IdentifierNode : Node {
     Token tok;
     explicit IdentifierNode(Token t) : tok(std::move(t)) {}
     std::string getValue() const { return tok.value; }
 };
 
-struct BinOpNode : Node
-{
+struct BinOpNode : Node {
     std::shared_ptr<Node> left;
     Token op_tok;
     std::shared_ptr<Node> right;
 };
 
-struct Statement : Node
-{
-    std::shared_ptr<Node> left;
-    std::shared_ptr<Node> right; // may be null
+struct UnaryOpNode : Node {
+    Token op_tok;
+    std::shared_ptr<Node> operand;
 };
 
-struct Condition : Node
-{
-    
-};
-
-struct IfStatement : Node
-{
-
-};
-
-struct WhileStatement : Node
-{
-
-};
-
-struct PrintStatement : Node
-{
-
-};
-
-struct Assignment : Node
-{
+struct AssignmentNode : Node {
     Token identifier;
     std::shared_ptr<Node> expression;
 };
 
-struct Declaration : Node
-{
+struct BlockNode : Node {
+    std::vector<std::shared_ptr<Node>> statements;
+};
 
+struct IfNode : Node {
+    std::shared_ptr<Node> condition;
+    std::shared_ptr<Node> then_branch;
+    std::shared_ptr<Node> else_branch;
+};
+
+struct WhileNode : Node {
+    std::shared_ptr<Node> condition;
+    std::shared_ptr<Node> body;
+};
+
+struct PrintNode : Node {
+    std::shared_ptr<Node> value;
+};
+
+struct ProgramNode : Node {
+    std::vector<std::shared_ptr<Node>> statements;
 };

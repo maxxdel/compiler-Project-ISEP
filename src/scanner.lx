@@ -52,6 +52,8 @@ NL         [\n]
 "&&"        { g_tokens->push_back(Token{TokenType::And, yytext, yylineno}); }
 "||"        { g_tokens->push_back(Token{TokenType::Or, yytext, yylineno}); }
 "!"         { g_tokens->push_back(Token{TokenType::Not, yytext, yylineno}); }
+"<"         { g_tokens->push_back(Token{TokenType::Less, yytext, yylineno}); }
+">"         { g_tokens->push_back(Token{TokenType::Greater, yytext, yylineno}); }
 
 ";"         { g_tokens->push_back(Token{TokenType::Semicolon, yytext, yylineno}); }
 ","         { g_tokens->push_back(Token{TokenType::Comma, yytext, yylineno}); }

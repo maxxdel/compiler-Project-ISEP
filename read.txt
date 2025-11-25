@@ -1,1 +1,10 @@
-a = b + 2;
+test = 3;
+test2 = 2;
+
+if (test > 3) {
+    test2 = 10;
+}
+
+while (test2 < 20) {
+    test2 = 1;
+}
