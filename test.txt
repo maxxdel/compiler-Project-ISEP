@@ -1,0 +1,16 @@
+#include <iostream>
+
+int main(){
+    int a;
+    a = 2;
+    cout << "test";
+    if (a < 1){
+    cout << "nope";
+    }
+
+    else {
+        cout << "yep, a is equal to " << a << endl;
+    }
+
+    return 0;
+}
