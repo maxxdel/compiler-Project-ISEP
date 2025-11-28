@@ -58,3 +58,14 @@ struct PrintNode : Node {
 struct ProgramNode : Node {
     std::vector<std::shared_ptr<Node>> statements;
 };
+
+enum class ValueType {
+    Int,
+    String
+};
+
+struct DeclarationNode : Node {
+    ValueType var_type;
+    Token identifier;
+};
+

@@ -7,10 +7,10 @@ enum class TokenType {
     If,
     Else,
     While,
-    Int,
+    IntKw,
     StringKw,
     Print,
-    Prints,
+    PrintBrackets,
 
     Var,
     String,
@@ -33,6 +33,11 @@ enum class TokenType {
     RParen,
     LBrace,
     RBrace,
+
+    Plus,
+    Minus,
+    Slash,
+    Star,
 
     End
 };

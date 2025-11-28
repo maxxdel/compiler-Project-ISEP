@@ -1,3 +1,8 @@
+cout << "Hello World !!";
+
+int test;
+int test2;
+
 test = 3;
 test2 = 2;
 
@@ -5,6 +10,10 @@ if (test > 3) {
     test2 = 10;
 }
 
-while (test2 < 20) {
-    test2 = 1;
+else {
+    cout << "It is eaten by statement !";
+}
+
+while (test2 < 20 && test == 3 ) {
+    test2 = 1 + test;
 }

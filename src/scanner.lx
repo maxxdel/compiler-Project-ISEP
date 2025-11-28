@@ -63,12 +63,23 @@ NL         [\n]
 "}"         { g_tokens->push_back(Token{TokenType::RBrace, yytext, yylineno}); }
 "="         { g_tokens->push_back(Token{TokenType::Assign, yytext, yylineno}); }
 
+"+"         { g_tokens->push_back(Token{TokenType::Plus, yytext, yylineno}); }
+"-"         { g_tokens->push_back(Token{TokenType::Minus, yytext, yylineno}); }
+"/"         { g_tokens->push_back(Token{TokenType::Slash, yytext, yylineno}); }
+"*"         { g_tokens->push_back(Token{TokenType::Star, yytext, yylineno}); }
+
+"<<"        { g_tokens->push_back(Token{TokenType::PrintBrackets, yytext, yylineno}); }
+
+
 {ID_START}{ID_CONT}*     {
     std::string s(yytext, yyleng);
     if      (s == "if")     g_tokens->push_back(Token{TokenType::If, s, yylineno});
     else if (s == "else")   g_tokens->push_back(Token{TokenType::Else, s, yylineno});
     else if (s == "while")  g_tokens->push_back(Token{TokenType::While, s, yylineno});
     else if (s == "cout")  g_tokens->push_back(Token{TokenType::Print, s, yylineno});
+    else if (s == "int")    g_tokens->push_back(Token{TokenType::IntKw, s, yylineno});
+    else if (s == "string") g_tokens->push_back(Token{TokenType::StringKw, s, yylineno});
+
     else                    g_tokens->push_back(Token{TokenType::Var, "V" + s, yylineno});
 }
 
