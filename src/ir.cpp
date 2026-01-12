@@ -46,7 +46,14 @@ IntermediateCodeGen::IntermediateCodeGen(const std::shared_ptr<Node> &root) : ro
     exec_statement(root);
 }
 
-std::string IntermediateCodeGen::nextTemp() { return "T" + std::to_string(tCounter++); }
+std::string IntermediateCodeGen::nextTemp()
+{
+    std::string t = "T" + std::to_string(tCounter++);
+    std::string sym = "__tmp" + std::to_string(tCounter - 1);
+    tempmap[t] = sym;
+    return t;
+}
+
 std::string IntermediateCodeGen::nextLabel() { return "L" + std::to_string(lCounter++); }
 std::string IntermediateCodeGen::nextStringSym() { return "S" + std::to_string(sCounter++); }
 
@@ -72,7 +79,6 @@ std::string IntermediateCodeGen::exec_expr(const std::shared_ptr<Node> &n)
 
     if (auto un = std::dynamic_pointer_cast<UnaryOpNode>(n))
     {
-
         throw std::runtime_error("IR: unary operator used as value expression: " + un->op_tok.value);
     }
 
@@ -89,7 +95,6 @@ std::string IntermediateCodeGen::exec_expr(const std::shared_ptr<Node> &n)
     auto right = exec_expr(bin->right);
 
     auto t = nextTemp();
-    identifiers[t] = "int";
     arr.append(make_assign(t, left, bin->op_tok.value, right));
     return t;
 }

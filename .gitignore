@@ -3,3 +3,5 @@ read.txt
 build
 test.txt
 .DS_Store
+output.asm
+output.o

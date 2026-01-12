@@ -1,16 +1,54 @@
-#include <iostream>
+{
+  int a;
+  int b;
+  int c;
+  int i;
 
-int main(){
-    int a;
-    a = 2;
-    cout << "test";
-    if (a < 1){
-    cout << "nope";
-    }
+  a = 7;
+  b = 3;
+  c = 0;
 
-    else {
-        cout << "yep, a is equal to " << a << endl;
-    }
+  print_string("=== start ===");
+  print_int(a);
+  print_int(b);
 
-    return 0;
+  c = (a + b) * 2 - (a / b);
+  print_string("c after arithmetic:");
+  print_int(c);
+
+  if (c >= 20) {
+    print_string("branch: c >= 20");
+  } else {
+    print_string("branch: c < 20");
+  }
+
+  if ((a > b && !(c == 0)) || (a == 7)) {
+    print_string("logical condition is true");
+  } else {
+    print_string("logical condition is false");
+  }
+
+  i = 0;
+  while (i < 5) {
+    print_string("loop i:");
+    print_int(i);
+
+    c = c + i;
+    i = i + 1;
+  }
+
+  if (i != 5) {
+    print_string("unexpected: i != 5");
+  } else {
+    print_string("ok: i == 5");
+  }
+
+  if (b <= a) {
+    print_string("ok: b <= a");
+  }
+
+  print_string("c at end:");
+  print_int(c);
+
+  print_string("=== end ===");
 }

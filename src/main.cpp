@@ -7,6 +7,7 @@
 #include "parser.hpp"
 #include "ast.hpp"
 #include "ir.hpp"
+#include "codegen.hpp"
 
 extern void scan_string_to_tokens(const std::string&, std::vector<Token>&);
 
@@ -235,5 +236,10 @@ int main(int argc, char** argv)
     auto ir = irgen.get();
     print_ir(ir);
 
+    CodeGenerator cg(ir.code, ir.identifiers, ir.constants, ir.tempmap);
+    cg.writeAsm("output.asm");
+    std::cout << "\n[codegen] wrote NASM assembly to output.asm\n";
+
     return 0;
 }
+

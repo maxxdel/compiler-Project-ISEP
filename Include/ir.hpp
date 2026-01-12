@@ -68,16 +68,18 @@ struct GeneratedIR
     InterCodeArray code;
     std::unordered_map<std::string, std::string> identifiers;
     std::unordered_map<std::string, std::string> constants;
+    std::unordered_map<std::string, std::string> tempmap;
 };
 
 class IntermediateCodeGen
 {
 public:
     explicit IntermediateCodeGen(const std::shared_ptr<Node> &root);
-    GeneratedIR get() const { return GeneratedIR{arr, identifiers, constants}; }
+    GeneratedIR get() const { return GeneratedIR{arr, identifiers, constants, tempmap}; }
 
 private:
     std::string exec_expr(const std::shared_ptr<Node> &n);
+
     void emit_condition(const std::shared_ptr<Node> &cond,
                         const std::string &trueLabel,
                         const std::string &falseLabel);
@@ -99,6 +101,7 @@ private:
     InterCodeArray arr;
     std::unordered_map<std::string, std::string> identifiers;
     std::unordered_map<std::string, std::string> constants;
+    std::unordered_map<std::string, std::string> tempmap;
     int tCounter{1};
     int lCounter{1};
     int sCounter{1};
