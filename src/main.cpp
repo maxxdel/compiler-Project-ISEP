@@ -6,6 +6,7 @@
 #include "tokens.hpp"
 #include "parser.hpp"
 #include "ast.hpp"
+#include "ir.hpp"
 
 extern void scan_string_to_tokens(const std::string&, std::vector<Token>&);
 
@@ -143,6 +144,60 @@ void print_ast(const std::shared_ptr<Node>& node, int indent = 0)
     }
 }
 
+void print_ir(const GeneratedIR& ir)
+{
+    std::cout << "=== IR ===\n";
+    if (!ir.constants.empty())
+    {
+        std::cout << "[constants]\n";
+        for (const auto& kv : ir.constants)
+            std::cout << "  " << kv.first << " = " << kv.second << "\n";
+    }
+
+    std::cout << "[code]\n";
+    for (const auto& instr : ir.code.code)
+    {
+        switch (instr->kind())
+        {
+            case IRKind::Label:
+            {
+                auto& l = *static_cast<LabelCode*>(instr.get());
+                std::cout << l.label << ":\n";
+                break;
+            }
+            case IRKind::Jump:
+            {
+                auto& j = *static_cast<JumpCode*>(instr.get());
+                std::cout << "  goto " << j.dist << "\n";
+                break;
+            }
+            case IRKind::Compare:
+            {
+                auto& c = *static_cast<CompareCodeIR*>(instr.get());
+                std::cout << "  if " << c.left << " " << c.operation << " " << c.right
+                          << " goto " << c.jump << "\n";
+                break;
+            }
+            case IRKind::Assignment:
+            {
+                auto& a = *static_cast<AssignmentCode*>(instr.get());
+                if (a.op.empty())
+                    std::cout << "  " << a.var << " = " << a.left << "\n";
+                else
+                    std::cout << "  " << a.var << " = " << a.left << " " << a.op << " " << a.right << "\n";
+                break;
+            }
+            case IRKind::Print:
+            {
+                auto& p = *static_cast<PrintCodeIR*>(instr.get());
+                std::cout << "  print_" << p.type << " " << p.value << "\n";
+                break;
+            }
+        }
+    }
+    std::cout << "==========\n";
+}
+
 int main(int argc, char** argv)
 {
     if(argc < 2)
@@ -175,6 +230,10 @@ int main(int argc, char** argv)
     std::cout << "=== AST ===\n";
     print_ast(root);
     std::cout << "===========\n";
+
+    IntermediateCodeGen irgen(root);
+    auto ir = irgen.get();
+    print_ir(ir);
 
     return 0;
 }
